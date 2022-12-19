@@ -50,7 +50,7 @@ export default function Home() {
       </Head>
       
       <main className={styles.main}>
-        <div className={styles.description}>,
+        <div className={styles.description}>
           <motion.div initial={{opacity:0}}
         animate={{
           opacity:0.8
@@ -60,7 +60,37 @@ export default function Home() {
             times: [0,  1],
             ease: "linear",
             delay:1,
-          }} style={{color:"white", display:"flex", flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}><img style={{paddingRight:"2%"}} width={50} src='Cognify-Logo-White.png'></img>  Cognify</motion.div>
+          }} style={{color:"white", display:"flex", flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}><img style={{paddingRight:"5%", marginLeft:"5%"}} width={50} src='Cognify-Logo-White.png'></img>  Cognify</motion.div>
+        </div>
+
+
+        <div className={styles.description}>
+          <div className={styles.heroText}>
+            <motion.div initial={{opacity:0}}
+            animate={{
+              opacity:0.8
+              }}
+              transition={{
+                duration: 2,
+                times: [0,  1],
+                ease: "linear",
+                delay:1.4,
+              }} style={{width:"100%", fontSize: "3.5rem", paddingBottom:"2%"}}>
+                Empowering humanity
+              </motion.div>
+              <motion.div initial={{opacity:0}}
+            animate={{
+              opacity:0.8
+              }}
+              transition={{
+                duration: 2,
+                times: [0,  1],
+                ease: "linear",
+                delay:1.6,
+              }} style={{width:"100%", fontSize: "3rem", color: '#ccc'}}>
+                through AI innovation
+              </motion.div>
+          </div>
         </div>
 
         
@@ -72,7 +102,7 @@ export default function Home() {
             duration: 2,
             times: [0,  1],
             ease: "linear",
-            delay:1,
+            delay:2,
           }} style={{width:"100%"}}>
         <div className={styles.grid}>
           <Link
@@ -85,20 +115,46 @@ export default function Home() {
               Content Analyzer <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
-              Asses the quality of you content with our AI powered tool
+              Assess the quality of your content with our AI powered tool
             </p>
             </Link>
 
           <a
-            
             href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className={styles.disabledcard}
             target="_blank"
-            rel="noopener noreferrer"
-            
+            rel="noopener noreferrer" 
           >
             <h2 className={inter.className}>
-              Content Generator <span>-&gt;</span>
+              Content Generator <span></span>
+            </h2>
+            <p className={inter.className}>
+              Coming soon
+            </p>
+          </a>
+
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className={styles.disabledcard}
+            target="_blank"
+            rel="noopener noreferrer" 
+          >
+            <h2 className={inter.className}>
+              News Analyzer <span></span>
+            </h2>
+            <p className={inter.className}>
+              Coming soon
+            </p>
+          </a>
+
+          <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className={styles.disabledcard}
+            target="_blank"
+            rel="noopener noreferrer" 
+          >
+            <h2 className={inter.className}>
+              Sapiens <span></span>
             </h2>
             <p className={inter.className}>
               Coming soon

@@ -13,7 +13,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: inherit;
-  font-size: 3rem;
+  font-size: 2.4rem;
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;
@@ -48,6 +48,8 @@
   grid-template-columns: repeat(2, minmax(25%, auto));
   width: var(--max-width);
   max-width: 50%;
+
+  row-gap: 5%;
 }
 
 .card {
@@ -291,4 +293,14 @@ a.disabledcard{
     background: rgba(var(--card-rgb), 0);
     border: 1px solid rgba(var(--card-border-rgb), 0);
     transition: background 200ms, border 200ms;
+}
+
+
+.heroText{
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1%;
 }
