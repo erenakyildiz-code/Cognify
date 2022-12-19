@@ -301,6 +301,7 @@ a.disabledcard{
   flex-direction: column;
   width: 45%;
   justify-content: space-between;
+  color: white;
   align-items: center;
   padding-left: 1%;
 }

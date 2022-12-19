@@ -1,6 +1,6 @@
 import { motion } from "framer-motion-3d";
 import { MotionConfig } from "framer-motion";
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useEffect, useState } from "react";
 import { transition } from "./settings";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useSmoothTransform } from "./useSmoothTransform";
@@ -31,7 +31,21 @@ const material = new THREE.MeshPhongMaterial({
 export function Shapes({ isHover, isPress, mouseX, mouseY }) {
   const lightRotateX = useSmoothTransform(mouseY, spring, mouseToLightRotation);
   const lightRotateY = useSmoothTransform(mouseX, spring, mouseToLightRotation);
-  
+  const [locationOfExtremeStuff, setLocationExtremeStuff] = useState(0);
+  const [sizeOfExtremeStuff, setSizeOfExtremeStuff] = useState();
+
+  useEffect(() => {
+    
+    const {innerWidth, innerHeight} = window;
+    if (innerWidth < 600 && innerWidth > 400){
+      setLocationExtremeStuff(-3.5)
+      setSizeOfExtremeStuff(0.03)
+    }
+    else{
+      setSizeOfExtremeStuff(0.07)
+    }
+    
+  });
   return (
     <Canvas className="radialGrad" style={{width:"100vw",height:"100vh", position:"absolute",zIndex:"0"}} shadows dpr={[1, 2]} resize={{ scroll: false, offsetSize: true }}>
       <Camera mouseX={mouseX} mouseY={mouseY} />
@@ -47,7 +61,7 @@ export function Shapes({ isHover, isPress, mouseX, mouseY }) {
         <motion.group
         initial={{x:-20 ,opacity:0}}
         animate={{
-            x:0,
+            x:locationOfExtremeStuff,
             opacity:1
           }}
           transition={{
@@ -59,7 +73,7 @@ export function Shapes({ isHover, isPress, mouseX, mouseY }) {
         <motion.group
         initial={{ scale: 0.07 ,x:4}}
         animate={{
-            scale:[0.07, 0.07],
+            scale:[sizeOfExtremeStuff,sizeOfExtremeStuff],
             rotateY: [0,  360],
             rotateZ:[0,0]
           }}
