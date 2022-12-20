@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-
-import { Configuration, OpenAIApi } from "openai";
-import Grid from '@mui/material/Grid'; // Grid version 1
-
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { Card } from "@mui/material";
-import { Badge } from "@mui/material";
-import OutlinedInput from '@mui/material/OutlinedInput';
-
-import Typography from '@mui/material/Typography';
 import Brand_AI from "../Header";
+import styled from "@emotion/styled";
+import Modal from '@mui/material/Modal';
+import Box from "@mui/material/Box";
+import dynamic from 'next/dynamic'
+import { Audio } from 'react-loader-spinner';
 
-import heroImg from '../../public/Content-Analyzer-Img.png';
+import Rating from '@mui/material/Rating';
+
+const { Configuration, OpenAIApi } = require("openai");
 
 
+const ReactApexChart = dynamic(
+  () => import('./modalChart'),
+  { ssr: false }
+)
 const ContractForm = ()=> {
 
   const [data, setData] = useState({
@@ -25,46 +27,92 @@ const ContractForm = ()=> {
   const [totalTokens, setTotalTokens] = useState(0);
   const [tokensUsed, setTokensUsed] = useState(0);
   const [opt,setOpt] = useState("a Doctor's");
-  
-  const top5options = ["a Doctor's", "an Engineer's", "an Average person's", "a University Proffessor's", "a Marketing Executive's"]
+  const [loading ,setLoading] =useState(true);
+  const [open, setOpen] = useState(false);
+  const [dataSample, setDataSample] = useState({
+    options: {
+      chart: {
+        id: "basic-bar",
+      },
+      xaxis: {
+        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+      },
+    },
+    series: [
+      {
+        name: "series-1",
+        data: [30, 40, 45, 50, 49, 60, 70, 91],
+      },
+    ],
+  });
 
+
+
+  const handleClose = () => {setOpen(false)}
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  const top5options = ["a Doctor's", "an Engineer's", "an Average person's", "a University Proffessor's", "a Marketing Executive's"];
+  const top5options2 = ["TikTok type content", "Twitter type content", "Academic content", "YouTube content", "Movie content"];
+  const top5options3 = ["No detail, just rating", "Regular explaination of results", "Precise detail with examples", "Explainations that have connections with ideas", "Precise, Scientific detail"];
+  const CssTextField = styled(TextField, {
+    shouldForwardProp: (props) => props !== "focuscolor"
+  })((p) => ({
+    // input label when focused
+    "& label.Mui-focused": {
+      color: p.focusColor
+    },
+    // focused color for input with variant='standard'
+    "& .MuiInput-underline:after": {
+      borderBottomColor: p.focusColor
+    },
+    // focused color for input with variant='filled'
+    "& .MuiFilledInput-underline:after": {
+      borderBottomColor: p.focusColor
+    },
+    // focused color for input with variant='outlined'
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderColor: p.focusColor
+      }
+    }
+  }));
   async function setter(article) 
   {
+    setLoading(true);
+    setOpen(true);
+    
 
     const configuration = new Configuration({
-        apiKey: "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", // my own api key
+      apiKey: process.env.OPENAI_API_KEY,
     });
-
-  
-  const openai = new OpenAIApi(configuration);
-  
-  let myprompt = "Assess the quality of the article below from 1 to 10, 1 being the lowest quality and 10 being the highest quality, for the list items below, from "+ opt +" perspective. Explain the weak and non-existing points in the article for each list item. Then, show the overall quality score for the article that will be the average of the quality points of each list item. Then, write the overall weak and non-existing points of the article: 1. Relevance to the topic at hand. 2. The level of detail provided in the article. 3. The accuracy and credibility of the information presented. 4. The writing style, including grammar and clarity. 5. The organization of the information and the logical flow of ideas. 6. The objectivity of the author and the presence of bias. 7. The presence of supporting evidence and sources. 8. The timeliness of the information. 9. The accessibility of the language used. 10. The potential impact and significance of the information presented. Article:"
-  
-  myprompt += article;
-  
-  const response = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt:  myprompt,
-    temperature: 0.7,
-    max_tokens: 1000,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-  });
+    const openai = new OpenAIApi(configuration);
     
-    setResponse(response.data.choices[0]);
-    setTokensUsed(response.data.usage.total_tokens);
-    if (totalTokens === 0) {
-      setTotalTokens(response.data.usage.total_tokens);
-    } else {
-      setTotalTokens(response.data.usage.total_tokens + totalTokens);
-    }
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: "Q: Assess the quality of the article below from 1 to 10, 1 being the lowest quality and 10 being the highest quality, for the list items below, from an Average Person's perspective. Take the intention of the article as \"detailed explanation\". Explain the weak and non-existing points in the article for each list item. Then, show the overall quality score for the article that will be the average of the quality points of each list item. Then, write the overall weak and non-existing points of the article. Give your response as a Javascript object. The Javascript object should have key-value pairs. Each pair would be every line of your response like the example below. Add the overall quality score and weak points in the object as the example below:\n\n{\"Relevance to the topic at hand.\":[\"8\",\"The article provides a detailed explanation of the topic at hand.\"]}\n\n1. Relevance to the topic at hand.\n2. The level of detail provided in the article.\n3. The accuracy and credibility of the information presented.\n4. The writing style, including grammar and clarity.\n5. The organization of the information and the logical flow of ideas.\n6. The objectivity of the author and the presence of bias.\n7. The presence of supporting evidence and sources.\n8. The timeliness of the information.\n9. The accessibility of the language used.\n10. The potential impact and significance of the information presented.",
+      temperature: 0,
+      max_tokens: 2000,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    });
+    setLoading(false);
   }
 
 
   const handleSubmit = (event) => {
     // prevents the submit button from refreshing the page
     event.preventDefault();
+    
     setter(data)
   };
 
@@ -87,95 +135,75 @@ const ContractForm = ()=> {
 
     <div className="contentAnalyzerPage">
       
-      <div className="contentAnalyzerLanding">
+      
 
-        <div className="contentAnalyzerHeader"> 
-          <div style={{color:"white", display:"flex", flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-            <img style={{paddingRight:"5%", marginLeft:"5%"}} width={100} src='Cognify-Logo-White.png'></img>
-          </div>
-        </div>
-
-        <div className="contentAnalyzerLandingContent">
-
-          <div className="contentAnalyzerHeroContent">
-            <div className="contentAnalyzerHeroHeader">
-              Content Analyzer
-            </div>
-            <div className="contentAnalyzerHeroDescription">
-              Assess the quality of your content
-            </div>
-
-            {/* Bonus Slider Descriptions
-
-            <div className="contentAnalyzerHeroDescription">
-              Organize your thoughts and ideas
-            </div>
-            <div className="contentAnalyzerHeroDescription">
-              Create content better and faster
-            </div>
-            <div className="contentAnalyzerHeroDescription">
-              Make data-driven content decisions
-            </div>
-            */}
-
-            <div className="contentAnalyzerHeroButtonDiv">
-              <button class="contentAnalyzerHeroButton">
-                <div className="contentAnalyzerHeroButtonArrow">▼</div>
-              </button>
-            </div>
-          </div>
-
-          <div className="contentAnalyzerLandingImg">
-            <img src='Content-Analyzer-Img.png'></img>
-          </div>
-
-
-        </div>
-
-      </div>
 
 
       <div className="form-container">
-        <form onSubmit={handleSubmit} onChange={handleChange}>
-          <div>
+        <form onSubmit={handleSubmit} >
             <Brand_AI></Brand_AI>
+            <div style={{display:"flex", justifyContent:"center", flexDirection:"column", height:"100%"}}>
+            <h3 style={{ fontWeight: "normal", color:"white", padding:"1vw", width:"100%", display:"flex", flexDirection:"row", justifyContent:"flex-start"}}>Enter your content in the box below and choose the appropriate options</h3>
+          <div className="everythingContainer">
+            
+          
+          <TextField
+          onChange={handleChange}
+          id="standard-multiline-static"
+          className='inputFieldContent'
+          multiline
+          rows={22}
+          value={data.inData}
+          variant="standard"
+          InputProps={{ disableUnderline: true, style: { color: "white", padding:"2vh" } }}
+          focusColor='white'
+          sx={{border: '1px solid 202123', borderRadius: 1, color:"#202123"}}
+        />
+      
+          
           </div>
-          <h3 style={{ marginBottom: "1%", marginTop: "1%", fontWeight: "normal"}}>Your Content</h3>
-            <OutlinedInput type="text"
-                name="name"
-                value={data.inData}
-                className='inputFieldContent'
-                id="outlined-multiline"
-                multiline
-                rows={10}
-                />
-      
-          <Grid style={{ marginTop:"4%", width:"100%", justifyContent:"space-between",alignItems:"center", paddingLeft:"10%",paddingRight:"10%"}} className="flexBoxFix" container spacing={2}>
-            <Grid xs={5} >
+          <div className="flexBoxFix">
+            <div className="itemOfFlexBox">
               <Autocomplete
-      
-                style={{width:"100%",backgroundColor:"white"}}
+              
                 id="combo-box-demo"
                 options={top5options}
                 onChange={handleChangeCombo}
-                renderInput={(params) =>  <TextField {...params} label="Perspective Options" />}
+                renderInput={(params) =>  <CssTextField  sx={{   borderRadius:"5px", backgroundColor:"#ffffff",  color:"black"}} focusColor='#202123' {...params} placeholder="Perspective Options" />}
               />
-            </Grid>
-            <Grid xs={5}>
-              <Button style={{width:"100%", backgroundColor:"white"}} variant="contained" onClick={handleSubmit}>Submit</Button>
-            </Grid>
-          </Grid>
-      
+              
+            </div>
+            <div className="itemOfFlexBox">
+              <Autocomplete
+                id="combo-box-demo"
+                options={top5options2}
+                onChange={handleChangeCombo}
+                renderInput={(params) =>  <CssTextField sx={{borderRadius:"5px", backgroundColor:"#ffffff"}} focusColor='#202123' {...params} placeholder="Media Options" />}
+              />
+              
+            </div>
+
+            <div className="itemOfFlexBox">
+              <Autocomplete
+
+                id="combo-box-demo"
+                options={top5options3}
+                onChange={handleChangeCombo}
+                renderInput={(params) =>  <CssTextField  sx={{  borderRadius:"5px", backgroundColor:"#ffffff",  color:"black"}} focusColor='#202123' {...params}  placeholder="Detail Options"/>}
+              />
+              
+            </div>
+
+
+            
+              
+          </div>
+          <div style={{width:"100%", display:"flex", flexDirection:"row", alignItems:"center",justifyContent:"center"}}>
+          <Button style={{width:"50%", backgroundColor:"#343541" }} variant="contained" onClick={handleSubmit}>Submit</Button>
+          </div>
+          </div>
+          
         </form>
-        <h3 style={{ marginBottom: "1%", marginTop: "2%", fontWeight: "normal"}}>Feedback</h3>
-        <TextField inputProps={
-                { readOnly: true}
-              }
-              className='inputFieldContent' 
-              id="outlined-multiline2"
-              multiline
-              variant="outlined" rows={10} value={response.text}>
-        </TextField>
 
         {/*
         <div style={{
@@ -221,6 +249,19 @@ const ContractForm = ()=> {
       */}
         
       </div>
+      <Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="parent-modal-title"
+  aria-describedby="parent-modal-description"
+>
+  <Box sx={{ ...style, display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", width: "50%", height:"80%", borderRadius:"10px", backgroundColor:"#ffffff" ,border:"none"}}>
+  {loading?<><ReactApexChart></ReactApexChart>
+  <div className="overallQualityText"><div style={{width:"20%", display:"flex", flexDirection:"column", alignItems:"center"}}>Overall score<Rating name="read-only" value={5} max={10} readOnly /></div></div>
+      </>:<Audio></Audio>}
+  
+  </Box>
+</Modal>
     </div>
   );
 }
