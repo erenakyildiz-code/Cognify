@@ -13,6 +13,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import Brand_AI from "../Header";
 
+import heroImg from '../../public/Content-Analyzer-Img.png';
+
 
 const ContractForm = ()=> {
 
@@ -83,92 +85,141 @@ const ContractForm = ()=> {
   
   return (
 
-    <div className="form-container">
-      <form onSubmit={handleSubmit} onChange={handleChange}> 
-        <div>
-          <Brand_AI></Brand_AI>
-          <p className="explainer">This program will calculate the quality of your article and what your article is missing in terms of content, according to the audience you choose below. We plan on adding new audiences soon.</p>
-          
-          <p className="explainer">We use a well-trained and progressed version of the OpenAI's davinci003 engine to produce the best results possible.</p>
+    <div className="contentAnalyzerPage">
+      
+      <div className="contentAnalyzerLanding">
+
+        <div className="contentAnalyzerHeader"> 
+          <div style={{color:"white", display:"flex", flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+            <img style={{paddingRight:"5%", marginLeft:"5%"}} width={100} src='Cognify-Logo-White.png'></img>
+          </div>
         </div>
 
-        <h3 style={{ marginBottom: "0.5%", marginTop: "1%"}}>Your Content</h3>
-          <OutlinedInput type="text"
-              name="name"
-              value={data.inData}
-              style={{width: "100%" ,backgroundColor:"white"}}
-              id="outlined-multiline"
-              multiline
-              rows={12}/>   
-        
-        <Grid style={{ marginTop:"2%", width:"100%", justifyContent:"space-between",alignItems:"center", paddingLeft:"10%",paddingRight:"10%"}} className="flexBoxFix" container spacing={2}>
-          <Grid xs={5} >
-            <Autocomplete
-            
-              style={{width:"100%",backgroundColor:"white"}}
-              id="combo-box-demo"
-              options={top5options}
-              onChange={handleChangeCombo}
-              renderInput={(params) =>  <TextField {...params} label="Perspective Options" />}
-            />
-          </Grid>
-          <Grid xs={5}>
-            <Button style={{width:"100%", backgroundColor:"black"}} variant="contained" onClick={handleSubmit}>Submit</Button>
-          </Grid>
-        </Grid>
-            
-      </form>
+        <div className="contentAnalyzerLandingContent">
 
-      <h3 style={{ marginBottom: "0.5%", marginTop: "2%"}}>Feedback</h3>
-      <TextField inputProps={
-					{ readOnly: true}
-				}  style={{width: "100%", backgroundColor:"white"}} id="outlined-multiline2"
-            multiline
-            variant="outlined" rows={12} value={response.text}>
-      </TextField>
+          <div className="contentAnalyzerHeroContent">
+            <div className="contentAnalyzerHeroHeader">
+              Content Analyzer
+            </div>
+            <div className="contentAnalyzerHeroDescription">
+              Assess the quality of your content
+            </div>
 
-      <div style={{
-        display: "flex",
-        flexDirection:"column",
-        alignItems: "start",
-        justifyContent: "start",
-        marginTop: "3%",
-        marginBottom: "5%",
-      }}>
+            {/* Bonus Slider Descriptions
 
-{/*
-        <h3 className="form-creator">Pricing data </h3>
-        <p className="explainer">You can see your usage data here, since this is a proof of concept, you can see all models and what they would cost even though we are using davinci003</p>
-        
-        <div className="bottomFormTotal">
-        <Card className="bottomFormCard" sx={{ maxWidth: 400 }} >
-          <p className="explainer2">Davinci</p>
-          
-          <p className="explainer3">Tokens Used: {tokensUsed}</p>
-          <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
-          <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.00002}$USD </p>
-        </Card>
-        <Card className="bottomFormCard" sx={{ maxWidth: 400 }}>
-        <p className="explainer2">Ada</p>
-          <p className="explainer3">Tokens Used: {tokensUsed}</p>
-          <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
-          <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.0000004}$USD </p>
-        </Card>
-        <Card className="bottomFormCard" sx={{ maxWidth: 400 }}>
-        <p className="explainer2">Babbage</p>
-          <p className="explainer3">Tokens Used: {tokensUsed}</p>
-          <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
-          <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.0000005}$USD </p>
-        </Card>
-        <Card className="bottomFormCard" sx={{ maxWidth: 400 }}>
-        <p className="explainer2">Curie</p>
-          <p className="explainer3">Tokens Used: {tokensUsed}</p>
-          <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
-          <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.000002}$USD </p>
-        </Card>
+            <div className="contentAnalyzerHeroDescription">
+              Organize your thoughts and ideas
+            </div>
+            <div className="contentAnalyzerHeroDescription">
+              Create content better and faster
+            </div>
+            <div className="contentAnalyzerHeroDescription">
+              Make data-driven content decisions
+            </div>
+            */}
+
+            <div className="contentAnalyzerHeroButtonDiv">
+              <button class="contentAnalyzerHeroButton">
+                <div className="contentAnalyzerHeroButtonArrow">▼</div>
+              </button>
+            </div>
+          </div>
+
+          <div className="contentAnalyzerLandingImg">
+            <img src='Content-Analyzer-Img.png'></img>
+          </div>
+
+
+        </div>
+
       </div>
-    */}
 
+
+      <div className="form-container">
+        <form onSubmit={handleSubmit} onChange={handleChange}>
+          <div>
+            <Brand_AI></Brand_AI>
+          </div>
+          <h3 style={{ marginBottom: "1%", marginTop: "1%", fontWeight: "normal"}}>Your Content</h3>
+            <OutlinedInput type="text"
+                name="name"
+                value={data.inData}
+                className='inputFieldContent'
+                id="outlined-multiline"
+                multiline
+                rows={10}
+                />
+      
+          <Grid style={{ marginTop:"4%", width:"100%", justifyContent:"space-between",alignItems:"center", paddingLeft:"10%",paddingRight:"10%"}} className="flexBoxFix" container spacing={2}>
+            <Grid xs={5} >
+              <Autocomplete
+      
+                style={{width:"100%",backgroundColor:"white"}}
+                id="combo-box-demo"
+                options={top5options}
+                onChange={handleChangeCombo}
+                renderInput={(params) =>  <TextField {...params} label="Perspective Options" />}
+              />
+            </Grid>
+            <Grid xs={5}>
+              <Button style={{width:"100%", backgroundColor:"white"}} variant="contained" onClick={handleSubmit}>Submit</Button>
+            </Grid>
+          </Grid>
+      
+        </form>
+        <h3 style={{ marginBottom: "1%", marginTop: "2%", fontWeight: "normal"}}>Feedback</h3>
+        <TextField inputProps={
+                { readOnly: true}
+              }
+              className='inputFieldContent' 
+              id="outlined-multiline2"
+              multiline
+              variant="outlined" rows={10} value={response.text}>
+        </TextField>
+
+        {/*
+        <div style={{
+          display: "flex",
+          flexDirection:"column",
+          alignItems: "start",
+          justifyContent: "start",
+          marginTop: "3%",
+          marginBottom: "5%",
+        }}>
+      
+          <h3 className="form-creator">Pricing data </h3>
+          <p className="explainer">You can see your usage data here, since this is a proof of concept, you can see all models and what they would cost even though we are using davinci003</p>
+      
+          <div className="bottomFormTotal">
+          <Card className="bottomFormCard" sx={{ maxWidth: 400 }} >
+            <p className="explainer2">Davinci</p>
+      
+            <p className="explainer3">Tokens Used: {tokensUsed}</p>
+            <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
+            <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.00002}$USD </p>
+          </Card>
+          <Card className="bottomFormCard" sx={{ maxWidth: 400 }}>
+          <p className="explainer2">Ada</p>
+            <p className="explainer3">Tokens Used: {tokensUsed}</p>
+            <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
+            <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.0000004}$USD </p>
+          </Card>
+          <Card className="bottomFormCard" sx={{ maxWidth: 400 }}>
+          <p className="explainer2">Babbage</p>
+            <p className="explainer3">Tokens Used: {tokensUsed}</p>
+            <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
+            <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.0000005}$USD </p>
+          </Card>
+          <Card className="bottomFormCard" sx={{ maxWidth: 400 }}>
+          <p className="explainer2">Curie</p>
+            <p className="explainer3">Tokens Used: {tokensUsed}</p>
+            <p className="explainer3">Total Tokens Used in Session: {totalTokens}</p>
+            <p className="explainer3">Price in USD for the entire session: {totalTokens * 0.000002}$USD </p>
+          </Card>
+        </div>
+        </div>
+      */}
+        
       </div>
     </div>
   );

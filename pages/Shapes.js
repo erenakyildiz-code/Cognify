@@ -31,15 +31,17 @@ const material = new THREE.MeshPhongMaterial({
 export function Shapes({ isHover, isPress, mouseX, mouseY }) {
   const lightRotateX = useSmoothTransform(mouseY, spring, mouseToLightRotation);
   const lightRotateY = useSmoothTransform(mouseX, spring, mouseToLightRotation);
-  const [locationOfExtremeStuff, setLocationExtremeStuff] = useState(0);
+  const [xLocationOfExtremeStuff, setXLocationExtremeStuff] = useState(0);
+  const [yLocationOfExtremeStuff, setYLocationExtremeStuff] = useState(0);
   const [sizeOfExtremeStuff, setSizeOfExtremeStuff] = useState();
 
   useEffect(() => {
     
     const {innerWidth, innerHeight} = window;
-    if (innerWidth < 600 && innerWidth > 400){
-      setLocationExtremeStuff(-3.5)
+    if (innerWidth < 600 && innerWidth > 300){
+      setXLocationExtremeStuff(-3.85)
       setSizeOfExtremeStuff(0.03)
+      setYLocationExtremeStuff(-2)
     }
     else{
       setSizeOfExtremeStuff(0.07)
@@ -47,7 +49,7 @@ export function Shapes({ isHover, isPress, mouseX, mouseY }) {
     
   });
   return (
-    <Canvas className="radialGrad" style={{width:"100vw",height:"100vh", position:"absolute",zIndex:"0"}} shadows dpr={[1, 2]} resize={{ scroll: false, offsetSize: true }}>
+    <Canvas className="radialGrad" style={{maxWidth:"100vw",maxHeight:"100vh", position:"absolute",zIndex:"0"}} shadows dpr={[1, 2]} resize={{ scroll: false, offsetSize: true }}>
       <Camera mouseX={mouseX} mouseY={mouseY} />
       <MotionConfig transition={transition}>
         <motion.group
@@ -61,7 +63,8 @@ export function Shapes({ isHover, isPress, mouseX, mouseY }) {
         <motion.group
         initial={{x:-20 ,opacity:0}}
         animate={{
-            x:locationOfExtremeStuff,
+            x:xLocationOfExtremeStuff,
+            y:yLocationOfExtremeStuff,
             opacity:1
           }}
           transition={{

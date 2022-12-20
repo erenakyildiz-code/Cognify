@@ -21,7 +21,7 @@ export default function Home() {
   }, []);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function Home() {
         <div className={styles.description}>
           <motion.div initial={{opacity:0}}
         animate={{
-          opacity:0.8
+          opacity:1
           }}
           transition={{
             duration: 2,
@@ -68,7 +68,7 @@ export default function Home() {
           <div className={styles.heroText}>
             <motion.div initial={{opacity:0}}
             animate={{
-              opacity:0.8
+              opacity:1
               }}
               transition={{
                 duration: 2,
@@ -80,7 +80,7 @@ export default function Home() {
               </motion.div>
               <motion.div initial={{opacity:0}}
             animate={{
-              opacity:0.8
+              opacity:0.9
               }}
               transition={{
                 duration: 2,
@@ -94,76 +94,72 @@ export default function Home() {
         </div>
 
         
-        <motion.div initial={{opacity:0}}
-        animate={{
-          opacity:0.8
-          }}
-          transition={{
-            duration: 2,
-            times: [0,  1],
-            ease: "linear",
-            delay:2,
-          }} style={{width:"100%"}}>
-        <div className={styles.grid}>
-          <Link
-            href="/articleCalculator"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Content Analyzer <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Assess the quality of your content with our AI powered tool
-            </p>
-            </Link>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.disabledcard}
-            target="_blank"
-            rel="noopener noreferrer" 
-          >
-            <h2 className={inter.className}>
-              Content Generator <span></span>
-            </h2>
-            <p className={inter.className}>
-              Coming soon
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.disabledcard}
-            target="_blank"
-            rel="noopener noreferrer" 
-          >
-            <h2 className={inter.className}>
-              News Analyzer <span></span>
-            </h2>
-            <p className={inter.className}>
-              Coming soon
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.disabledcard}
-            target="_blank"
-            rel="noopener noreferrer" 
-          >
-            <h2 className={inter.className}>
-              Sapiens <span></span>
-            </h2>
-            <p className={inter.className}>
-              Coming soon
-            </p>
-          </a>
-
-         
-        </div>
-        </motion.div>
+          <motion.div initial={{opacity:0}}
+          animate={{
+            opacity:1
+            }}
+            transition={{
+              duration: 2,
+              times: [0,  1],
+              ease: "linear",
+              delay:2,
+            }} style={{width:"100%"}}>
+          <div className={styles.grid}>
+            <Link
+              href="/articleCalculator"
+              className={styles.card}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h2 className={inter.className}>
+                Content Analyzer <span>-&gt;</span>
+              </h2>
+              <p className={inter.className}>
+                Assess the quality of your content with our AI powered tool
+              </p>
+              </Link>
+            <a
+              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+              className={styles.disabledcard}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h2 className={inter.className}>
+                Content Generator <span></span>
+              </h2>
+              <p className={inter.className}>
+                Coming soon
+              </p>
+            </a>
+            <a
+              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+              className={styles.disabledcard}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h2 className={inter.className}>
+                News Analyzer <span></span>
+              </h2>
+              <p className={inter.className}>
+                Coming soon
+              </p>
+            </a>
+            <a
+              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+              className={styles.disabledcard}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h2 className={inter.className}>
+                Sapiens <span></span>
+              </h2>
+              <p className={inter.className}>
+                Coming soon
+              </p>
+            </a>
+          
+          </div>
+          </motion.div>
       </main>
     </>
   )
