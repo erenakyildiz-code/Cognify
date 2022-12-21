@@ -27,8 +27,14 @@ const ContractForm = ()=> {
   const [totalTokens, setTotalTokens] = useState(0);
   const [tokensUsed, setTokensUsed] = useState(0);
   const [opt,setOpt] = useState("a Doctor's");
+  const [opt2,setOpt2] = useState("TikTok type content");
+  const [opt3,setOpt3] = useState("one word detail");
   const [loading ,setLoading] =useState(true);
   const [open, setOpen] = useState(false);
+  const [GPTratings, setRate] = useState();
+  const [GPTdetails, setDetail] = useState();
+  const [GPToverview, setOverview] = useState({"star":0,"detail":""});
+  const [GPTWeak, setWeak] = useState();
   const [dataSample, setDataSample] = useState({
     options: {
       chart: {
@@ -61,8 +67,9 @@ const ContractForm = ()=> {
     p: 4,
   };
   const top5options = ["a Doctor's", "an Engineer's", "an Average person's", "a University Proffessor's", "a Marketing Executive's"];
-  const top5options2 = ["TikTok type content", "Twitter type content", "Academic content", "YouTube content", "Movie content"];
-  const top5options3 = ["No detail, just rating", "Regular explaination of results", "Precise detail with examples", "Explainations that have connections with ideas", "Precise, Scientific detail"];
+  const top5options2 = ["TikTok content", "Twitter content", "Academic content", "YouTube content", "Movie content"];
+  const top5options3 = ["One word detail", "Regular explaination of results", "Precise detail with examples", "Explainations that have connections with ideas", "Precise, Scientific detail"];
+  const allRatings = ["Relevance to the topic at hand","The level of detail provided in the content"]
   const CssTextField = styled(TextField, {
     shouldForwardProp: (props) => props !== "focuscolor"
   })((p) => ({
@@ -89,23 +96,44 @@ const ContractForm = ()=> {
   {
     setLoading(true);
     setOpen(true);
-    
 
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-    const openai = new OpenAIApi(configuration);
-    
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: "Q: Assess the quality of the article below from 1 to 10, 1 being the lowest quality and 10 being the highest quality, for the list items below, from an Average Person's perspective. Take the intention of the article as \"detailed explanation\". Explain the weak and non-existing points in the article for each list item. Then, show the overall quality score for the article that will be the average of the quality points of each list item. Then, write the overall weak and non-existing points of the article. Give your response as a Javascript object. The Javascript object should have key-value pairs. Each pair would be every line of your response like the example below. Add the overall quality score and weak points in the object as the example below:\n\n{\"Relevance to the topic at hand.\":[\"8\",\"The article provides a detailed explanation of the topic at hand.\"]}\n\n1. Relevance to the topic at hand.\n2. The level of detail provided in the article.\n3. The accuracy and credibility of the information presented.\n4. The writing style, including grammar and clarity.\n5. The organization of the information and the logical flow of ideas.\n6. The objectivity of the author and the presence of bias.\n7. The presence of supporting evidence and sources.\n8. The timeliness of the information.\n9. The accessibility of the language used.\n10. The potential impact and significance of the information presented.",
-      temperature: 0,
-      max_tokens: 2000,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    });
-    setLoading(false);
+  const configuration = new Configuration({
+    //TODO not secure
+  apiKey: "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",
+  });
+  console.log(article);
+const openai = new OpenAIApi(configuration);
+
+
+var  pr = "Asses the quality of the following content from 0 to 10, 0 being the lowest quality and 10 being the highest quality, from your own perspective, John. The following content is TikTok content, so your answers must include something about this. Explain the weak and non-existing points in the content for each list item \"in detail\". Then, show the overall quality score for the content that will be the average of the quality points of each list item. Then, write the overall weak and non-existing points of the content.\n\nThe input will be in the form of \nCONTENT: \nQuantum mechanics is a fundamental theory in physics that provides a description of the physical properties of nature at the scale of atoms and subatomic particles.It is the foundation of all quantum physics including quantum chemistry, quantum field theory, quantum technology, and quantum information science.\n\nThe expected output is a Javascript object that have key-value pairs. Each pair would be every line of your response like the example below, add the overall quality score and weak points in the object as the example below:\n\nThe KEYS of the output are as follows:\n\n1. \"Relevance to the topic at hand\"\n2. \"The level of detail provided in the content\"\n3. \"The accuracy and credibility of the information presented\"\n4. \"The writing style, including grammar and clarity\"\n5. \"The organization of the information and the logical flow of ideas\"\n6. \"The objectivity of the author and the presence of bias\"\n7. \"The presence of supporting evidence and sources\"\n8. \"The timeliness of the information\"\n9. \"The accessibility of the language\"\n10. \"The potential impact and significance of the information presented\"\n11. \"Overall quality\"\n12. \"Weak points\"\n\nThe output should look like this:\n{ \"Relevance to the topic at hand\": [\"your rating\",\"your explaination for this rating\"], \"The level of detail provided in the content\": [\"your rating\",\"your explaination for this rating\"], \"The accuracy and credibility of the information presented\": [\"your rating\",\"your explaination for this rating\"], \"The writing style, including grammar and clarity\":  [\"your rating\",\"your explaination for this rating\"], \"The organization of the information and the logical flow of ideas\": [\"your rating\",\"your explaination for this rating\"], \"The objectivity of the author and the presence of bias\": [\"your rating\",\"your explaination for this rating\"], \"The presence of supporting evidence and sources\": [\"your rating\",\"your explaination for this rating\"], \"The timeliness of the information\":  [\"your rating\",\"your explaination for this rating\"], \"The accessibility of the language\":  [\"your rating\",\"your explaination for this rating\"], \"The potential impact and significance of the information presented\":  [\"your rating\",\"your explaination for this rating\"], \"Overall quality\":  [\"your rating\",\"your explaination for this rating\"], \"Weak points\": \"Weak points of the content you have just read\" } RESPONSE MUST BE JSON\n\n\nCONTENT:\n",
+
+pr = pr + article + "\nANSWER:\n"
+const response = await openai.createCompletion({
+  model: "text-davinci-003",
+  prompt: pr,
+  temperature: 0.7,
+  max_tokens: 1490,
+  top_p: 1,
+  frequency_penalty: 0,
+  presence_penalty: 0,
+});
+  console.log("response:")
+  console.log(response.data.choices)
+  var ratings = [];
+  var detail = [];
+  var i = 0;
+  while (i < 10) {
+    ratings.push(JSON.parse(response.data.choices[0].text)[Object.keys(JSON.parse(response.data.choices[0].text))[i]][0]);
+    detail.push(JSON.parse(response.data.choices[0].text)[Object.keys(JSON.parse(response.data.choices[0].text))[i]][1]);
+    i += 1;
+  }
+  const obj = {}
+  obj.star =  JSON.parse(response.data.choices[0].text)[Object.keys(JSON.parse(response.data.choices[0].text))[10]][0]
+  obj.detail =  JSON.parse(response.data.choices[0].text)[Object.keys(JSON.parse(response.data.choices[0].text))[10]][1]
+  setOverview(obj)
+  setRate(ratings);
+  setDetail(detail);
+  setLoading(false);
   }
 
 
@@ -125,9 +153,18 @@ const ContractForm = ()=> {
     event.preventDefault();
     setOpt(value);
   }
+  const handleChangeCombo2 = (event,value) =>{
+    event.preventDefault();
+    setOpt2(value);
+  }
+  const handleChangeCombo3 = (event,value) =>{
+    event.preventDefault();
+    setOpt3(value);
+  }
 
 
   useEffect(() =>{
+    setLoading(false);
   },[response])
   
   
@@ -175,9 +212,9 @@ const ContractForm = ()=> {
             </div>
             <div className="itemOfFlexBox">
               <Autocomplete
-                id="combo-box-demo"
+                id="combo-box-demo2"
                 options={top5options2}
-                onChange={handleChangeCombo}
+                onChange={handleChangeCombo2}
                 renderInput={(params) =>  <CssTextField sx={{borderRadius:"5px", backgroundColor:"#ffffff"}} focusColor='#202123' {...params} placeholder="Media Options" />}
               />
               
@@ -186,9 +223,9 @@ const ContractForm = ()=> {
             <div className="itemOfFlexBox">
               <Autocomplete
 
-                id="combo-box-demo"
+                id="combo-box-demo3"
                 options={top5options3}
-                onChange={handleChangeCombo}
+                onChange={handleChangeCombo3}
                 renderInput={(params) =>  <CssTextField  sx={{  borderRadius:"5px", backgroundColor:"#ffffff",  color:"black"}} focusColor='#202123' {...params}  placeholder="Detail Options"/>}
               />
               
@@ -256,9 +293,10 @@ const ContractForm = ()=> {
   aria-describedby="parent-modal-description"
 >
   <Box sx={{ ...style, display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", width: "50%", height:"80%", borderRadius:"10px", backgroundColor:"#ffffff" ,border:"none"}}>
-  {loading?<><ReactApexChart></ReactApexChart>
-  <div className="overallQualityText"><div style={{width:"20%", display:"flex", flexDirection:"column", alignItems:"center"}}>Overall score<Rating name="read-only" value={5} max={10} readOnly /></div></div>
-      </>:<Audio></Audio>}
+  {loading?<Audio></Audio>:<><ReactApexChart data={GPTratings} data2={GPTdetails}></ReactApexChart>
+  <p className="overallQualityText">{GPToverview.detail}</p>
+  <div className="overallQualityText"><div style={{width:"20%", display:"flex", flexDirection:"column", alignItems:"center"}}>Overall score<Rating name="read-only" value={GPToverview.star} max={10} readOnly /></div></div>
+      </>}
   
   </Box>
 </Modal>

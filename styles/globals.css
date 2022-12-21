@@ -551,3 +551,10 @@ h3{
 }
 
 }
+.tooltipBox{
+  background-color: white;
+  padding: 2px;
+  font-size: small;
+  color:black;
+  font-family: 'Manrope', sans-serif;
+}
