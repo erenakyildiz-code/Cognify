@@ -2,22 +2,17 @@ import { useEffect, useState } from "react";
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Brand_AI from "../Header";
+import Brand_AI from "../Header.tsx";
 import styled from "@emotion/styled";
 import Modal from '@mui/material/Modal';
 import Box from "@mui/material/Box";
-import dynamic from 'next/dynamic'
 import { Audio } from 'react-loader-spinner';
-
+import "../../styles/globals.css";
+import ReactApexChart from "./modalChart";
 import Rating from '@mui/material/Rating';
 
 const { Configuration, OpenAIApi } = require("openai");
 
-
-const ReactApexChart = dynamic(
-  () => import('./modalChart'),
-  { ssr: false }
-)
 const ContractForm = ()=> {
 
   const [data, setData] = useState({

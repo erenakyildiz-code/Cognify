@@ -1,12 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
 import { motion, MotionConfig, useMotionValue } from "framer-motion";
 import { Suspense ,useState, useEffect } from "react";
-import { Shapes } from "./Shapes";
-const inter = Inter({ subsets: ['latin'] })
+import { Shapes } from "./fold/Shapes";
+import React from 'react';
 
 export default function Home() {
 
@@ -42,12 +38,6 @@ export default function Home() {
           </div>
         </motion.div>
           
-      <Head>
-        <title>Cognify</title>
-        <meta name="description" content="Cognify" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       
       <main className={styles.main}>
         <div className={styles.description}>
@@ -105,31 +95,39 @@ export default function Home() {
               delay:2,
             }} style={{width:"100%"}}>
           <div className={styles.grid}>
-            <Link
+            <a
               href="/articleCalculator"
-              className={styles.card}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <h2 className={inter.className}>
+              
+              <div 
+              className={styles.card}>
+
+<span>
+              <h2 >
                 Content Analyzer <span>-&gt;</span>
               </h2>
-              <p className={inter.className}>
+              <p >
                 Assess the quality of your content with our AI powered tool
               </p>
-              </Link>
+              </span>
+              </div>
+              
+              </a>
             <a
               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
               className={styles.disabledcard}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <h2 className={inter.className}>
+              <span>
+              <h2 >
                 Content Generator <span></span>
               </h2>
-              <p className={inter.className}>
+              <p >
                 Coming soon
-              </p>
+              </p></span>
             </a>
             <a
               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -137,12 +135,14 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <h2 className={inter.className}>
+              <span>
+              <h2 >
                 News Analyzer <span></span>
               </h2>
-              <p className={inter.className}>
+              <p >
                 Coming soon
               </p>
+              </span>
             </a>
             <a
               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -150,12 +150,14 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <h2 className={inter.className}>
+              <span>
+              <h2 >
                 Sapiens <span></span>
               </h2>
-              <p className={inter.className}>
+              <p >
                 Coming soon
               </p>
+              </span>
             </a>
           
           </div>
