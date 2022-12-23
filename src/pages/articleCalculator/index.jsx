@@ -46,9 +46,14 @@ const ContractForm = ()=> {
       },
     ],
   });
+  const [rowNum, setRowNum] = useState(1);
 
-
-
+  useEffect(() => {
+    
+    const {innerWidth, innerHeight} = window;
+    setRowNum(innerHeight / 75);
+    
+  });
   const handleClose = () => {setOpen(false)}
 
   const style = {
@@ -61,10 +66,10 @@ const ContractForm = ()=> {
     boxShadow: 24,
     p: 4,
   };
-  const top5options = ["a Doctor's", "an Engineer's", "an Average person's", "a University Proffessor's", "a Marketing Executive's"];
+  const top5options = ["a Doctor", "an Engineer", "an Average person", "a University Professor", "a Marketing Executive", "a Student"];
   const top5options2 = ["TikTok content", "Twitter content", "Academic content", "YouTube content", "Movie content"];
   const top5options3 = ["One word detail", "Regular explaination of results", "Precise detail with examples", "Explainations that have connections with ideas", "Precise, Scientific detail"];
-  const allRatings = ["Relevance to the topic at hand","The level of detail provided in the content"]
+
   const CssTextField = styled(TextField, {
     shouldForwardProp: (props) => props !== "focuscolor"
   })((p) => ({
@@ -100,7 +105,7 @@ const ContractForm = ()=> {
 const openai = new OpenAIApi(configuration);
 
 
-var  pr = "Asses the quality of the following content from 0 to 10, 0 being the lowest quality and 10 being the highest quality, from your own perspective, John. The following content is TikTok content, so your answers must include something about this. Explain the weak and non-existing points in the content for each list item \"in detail\". Then, show the overall quality score for the content that will be the average of the quality points of each list item. Then, write the overall weak and non-existing points of the content.\n\nThe input will be in the form of \nCONTENT: \nQuantum mechanics is a fundamental theory in physics that provides a description of the physical properties of nature at the scale of atoms and subatomic particles.It is the foundation of all quantum physics including quantum chemistry, quantum field theory, quantum technology, and quantum information science.\n\nThe expected output is a Javascript object that have key-value pairs. Each pair would be every line of your response like the example below, add the overall quality score and weak points in the object as the example below:\n\nThe KEYS of the output are as follows:\n\n1. \"Relevance to the topic at hand\"\n2. \"The level of detail provided in the content\"\n3. \"The accuracy and credibility of the information presented\"\n4. \"The writing style, including grammar and clarity\"\n5. \"The organization of the information and the logical flow of ideas\"\n6. \"The objectivity of the author and the presence of bias\"\n7. \"The presence of supporting evidence and sources\"\n8. \"The timeliness of the information\"\n9. \"The accessibility of the language\"\n10. \"The potential impact and significance of the information presented\"\n11. \"Overall quality\"\n12. \"Weak points\"\n\nThe output should look like this:\n{ \"Relevance to the topic at hand\": [\"your rating\",\"your explaination for this rating\"], \"The level of detail provided in the content\": [\"your rating\",\"your explaination for this rating\"], \"The accuracy and credibility of the information presented\": [\"your rating\",\"your explaination for this rating\"], \"The writing style, including grammar and clarity\":  [\"your rating\",\"your explaination for this rating\"], \"The organization of the information and the logical flow of ideas\": [\"your rating\",\"your explaination for this rating\"], \"The objectivity of the author and the presence of bias\": [\"your rating\",\"your explaination for this rating\"], \"The presence of supporting evidence and sources\": [\"your rating\",\"your explaination for this rating\"], \"The timeliness of the information\":  [\"your rating\",\"your explaination for this rating\"], \"The accessibility of the language\":  [\"your rating\",\"your explaination for this rating\"], \"The potential impact and significance of the information presented\":  [\"your rating\",\"your explaination for this rating\"], \"Overall quality\":  [\"your rating\",\"your explaination for this rating\"], \"Weak points\": \"Weak points of the content you have just read\" } RESPONSE MUST BE JSON\n\n\nCONTENT:\n",
+var  pr = "Asses the quality of the following content from 0 to 10, 0 being the lowest quality and 10 being the highest quality, from the perspective of "+ opt +". The following content is "+ opt2 +", so your answers must include something about this. Explain the weak and non-existing points in the content for each list item \"in detail\". Then, show the overall quality score for the content that will be the average of the quality points of each list item. Then, write the overall weak and non-existing points of the content.\n\nThe input will be in the form of \nCONTENT: \nQuantum mechanics is a fundamental theory in physics that provides a description of the physical properties of nature at the scale of atoms and subatomic particles.It is the foundation of all quantum physics including quantum chemistry, quantum field theory, quantum technology, and quantum information science.\n\nThe expected output is a Javascript object that have key-value pairs. Each pair would be every line of your response like the example below, add the overall quality score and weak points in the object as the example below:\n\nThe KEYS of the output are as follows:\n\n1. \"Relevance to the topic at hand\"\n2. \"The level of detail provided in the content\"\n3. \"The accuracy and credibility of the information presented\"\n4. \"The writing style, including grammar and clarity\"\n5. \"The organization of the information and the logical flow of ideas\"\n6. \"The objectivity of the author and the presence of bias\"\n7. \"The presence of supporting evidence and sources\"\n8. \"The timeliness of the information\"\n9. \"The accessibility of the language\"\n10. \"The potential impact and significance of the information presented\"\n11. \"Overall quality\"\n12. \"Weak points\"\n\nThe output should look like this:\n{ \"Relevance to the topic at hand\": [\"your rating\",\"your explaination for this rating\"], \"The level of detail provided in the content\": [\"your rating\",\"your explaination for this rating\"], \"The accuracy and credibility of the information presented\": [\"your rating\",\"your explaination for this rating\"], \"The writing style, including grammar and clarity\":  [\"your rating\",\"your explaination for this rating\"], \"The organization of the information and the logical flow of ideas\": [\"your rating\",\"your explaination for this rating\"], \"The objectivity of the author and the presence of bias\": [\"your rating\",\"your explaination for this rating\"], \"The presence of supporting evidence and sources\": [\"your rating\",\"your explaination for this rating\"], \"The timeliness of the information\":  [\"your rating\",\"your explaination for this rating\"], \"The accessibility of the language\":  [\"your rating\",\"your explaination for this rating\"], \"The potential impact and significance of the information presented\":  [\"your rating\",\"your explaination for this rating\"], \"Overall quality\":  [\"your rating\",\"your explaination for this rating\"], \"Weak points\": \"Weak points of the content you have just read\" } RESPONSE MUST BE JSON\n\n\nCONTENT:\n",
 
 pr = pr + article + "\nANSWER:\n"
 const response = await openai.createCompletion({
@@ -174,7 +179,7 @@ const response = await openai.createCompletion({
       <div className="form-container">
         <form onSubmit={handleSubmit} >
             <Brand_AI></Brand_AI>
-            <div style={{display:"flex", justifyContent:"center", flexDirection:"column", height:"100%"}}>
+            <div style={{display:"flex", justifyContent:"space-evenly", flexDirection:"column", height:"80%"}}>
             <h3 style={{ fontWeight: "normal", color:"white", padding:"1vw", width:"100%", display:"flex", flexDirection:"row", justifyContent:"flex-start"}}>Enter your content in the box below and choose the appropriate options</h3>
           <div className="everythingContainer">
             
@@ -184,8 +189,9 @@ const response = await openai.createCompletion({
           id="standard-multiline-static"
           className='inputFieldContent'
           multiline
-          rows={22}
           value={data.inData}
+          maxRows={rowNum}
+        
           variant="standard"
           InputProps={{ disableUnderline: true, style: { color: "white", padding:"2vh" } }}
           focusColor='white'
@@ -287,11 +293,11 @@ const response = await openai.createCompletion({
   aria-labelledby="parent-modal-title"
   aria-describedby="parent-modal-description"
 >
-  <Box sx={{ ...style, display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", width: "50%", height:"80%", borderRadius:"10px", backgroundColor:"#ffffff" ,border:"none"}}>
-  {loading?<Audio></Audio>:<><ReactApexChart data={GPTratings} data2={GPTdetails}></ReactApexChart>
+  <Box sx={{ ...style, display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", width: "100%", height:"100%", borderRadius:"10px", backgroundColor:"#ffffff" ,border:"none"}}>
+  {loading?<Audio></Audio>:<div style={{  display:"flex", flexDirection:"column", justifyContent:"space-evenly", width:"100%", height:"100%", alignItems:"center"}}><ReactApexChart data={GPTratings} data2={GPTdetails}></ReactApexChart>
   <p className="overallQualityText">{GPToverview.detail}</p>
-  <div className="overallQualityText"><div style={{width:"20%", display:"flex", flexDirection:"column", alignItems:"center"}}>Overall score<Rating name="read-only" value={GPToverview.star} max={10} readOnly /></div></div>
-      </>}
+  <div className="overallQualityText"><div style={{width:"100%", display:"flex", flexDirection:"column", alignItems:"center"}}>Overall score<Rating name="read-only" value={GPToverview.star} max={10} readOnly /></div></div>
+  <Button onClick={handleClose}>Close</Button></div>}
   
   </Box>
 </Modal>

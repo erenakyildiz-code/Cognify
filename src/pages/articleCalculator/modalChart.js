@@ -13,7 +13,7 @@ export default function ChartSample(props) {
       plotOptions: {
         bar: {
           borderRadius: 4,
-          horizontal: true,
+          horizontal: false,
         }
       },
       colors:['#F44336', '#E91E63', '#9C27B0'],
@@ -36,12 +36,12 @@ export default function ChartSample(props) {
         custom: function({ series, seriesIndex, dataPointIndex, w }) {
           return (
              
-            "<span>" +'<div class="tooltipBox">'+
+            '<div class="labelBox">' +'<div class="tooltipBox">'+
             w.globals.labels[dataPointIndex] +
             ": " +
             props.data2[dataPointIndex] +
             
-            "</div>"+"</span>"
+            "</div>"+"</div>"
           );
         }
       }
@@ -50,15 +50,13 @@ export default function ChartSample(props) {
   dataSample.series[0].data = props.data;
 
   return (
-    <div>
       <Chart
         options={dataSample.options}
         series={dataSample.series}
         
         type="bar"
-        width="700"
-        height="500"
+        width="150%"
+        height="60%"
       />
-    </div>
   );
 }

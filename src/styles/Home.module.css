@@ -10,26 +10,21 @@
 
 @media (width < 600px) {
   .main {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     padding: 0;
   }
 }
 
 .description {
-  display: flex;
-  justify-content: flex-start;
-  align-items: inherit;
-  font-size: 2.4rem;
   max-width: var(--max-width);
-  width: 100%;
-  z-index: 2;
   font-family: var(--font-mono);
 }
 
-@media (width < 600px) {
+@media (max-width < 600px) {
   .description {
     display: flex;
     flex-direction: column;
@@ -42,14 +37,12 @@
 .heroText{
   display: flex;
   flex-direction: column;
-  width: 45%;
-  justify-content: space-between;
+  justify-content: flex-start;
   color: white;
   align-items: center;
-  padding-left: 1%;
 }
 
-@media (width < 600px) {
+@media (max-width < 600px) {
   .heroText {
     display: flex;
     flex-direction: column;
@@ -120,12 +113,13 @@
 }
 @media (max-width: 700px) {
   .grid {
-    margin-top: 20%;
     width: 100%;
 
-    display: grid;
-    position: absolute;
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+    margin:0;
     grid-template-columns: repeat(2, minmax(50%, auto));
     width: var(--max-width);
   }
@@ -280,14 +274,6 @@
   .content {
     padding: 4rem;
   }
-
-  .grid {
-    grid-template-columns: 1fr;
-    margin-bottom: 10%;
-    max-width: 100%;
-    text-align: center;
-  }
-
   .card {
     padding: 1rem 2.5rem;
     
@@ -310,45 +296,21 @@
     font-size: 0.8rem;
   }
 
-  .description a {
-    padding: 1rem;
-  }
 
   .description p,
-  .description div {
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    width: 100%;
-  }
-
   .description p {
-    align-items: center;
-    inset: 0 0 auto;
+    align-items: flex-start;
     padding: 2rem 1rem 1.4rem;
     border-radius: 0;
     border: none;
-    border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.25);
-    background: linear-gradient(
-      to bottom,
-      rgba(var(--background-start-rgb), 1),
-      rgba(var(--callout-rgb), 0.5)
-    );
     background-clip: padding-box;
     backdrop-filter: blur(24px);
   }
 
   .description div {
-    align-items: flex-end;
+    align-items: flex-start;
     pointer-events: none;
-    inset: auto 0 0;
     padding: 2rem;
-    height: 200px;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgb(var(--background-end-rgb)) 40%
-    );
     z-index: 1;
   }
 }
