@@ -67,7 +67,7 @@ const ContractForm = ()=> {
     p: 4,
   };
   const top5options = ["a Doctor", "an Engineer", "an Average person", "a University Professor", "a Marketing Executive", "a Student"];
-  const top5options2 = ["TikTok content", "Twitter content", "Academic content", "YouTube content", "Movie content"];
+  const top5options2 = ["TikTok content", "Twitter content", "Academic content", "YouTube content", "Movie content","Blog content"];
   const top5options3 = ["One word detail", "Regular explaination of results", "Precise detail with examples", "Explainations that have connections with ideas", "Precise, Scientific detail"];
 
   const CssTextField = styled(TextField, {
@@ -172,13 +172,9 @@ const response = await openai.createCompletion({
 
     <div className="contentAnalyzerPage">
       
-      
-
-
-
       <div className="form-container">
         <form onSubmit={handleSubmit} >
-            <Brand_AI></Brand_AI>
+            <Brand_AI type={"Content Analyser"}></Brand_AI>
             <div style={{display:"flex", justifyContent:"space-evenly", flexDirection:"column", height:"80%"}}>
             <h3 style={{ fontWeight: "normal", color:"white", padding:"1vw", width:"100%", display:"flex", flexDirection:"row", justifyContent:"flex-start"}}>Enter your content in the box below and choose the appropriate options</h3>
           <div className="everythingContainer">

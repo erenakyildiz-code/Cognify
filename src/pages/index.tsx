@@ -117,18 +117,19 @@ export default function Home() {
               
               </a>
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.disabledcard}
+              href="/contentGenerator"
+              className={styles.card}
               target="_blank"
               rel="noopener noreferrer"
             >
               <span>
               <h2 className={styles.gridHead}>
-                Content Generator <span></span>
+                Content Generator <span>-&gt;</span>
               </h2>
               <p className={styles.gridDescription}>
-                Coming soon
-              </p></span>
+                Generate Content for your website with our AI powered tool
+              </p>
+              </span>
             </a>
             <a
               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
