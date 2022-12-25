@@ -87,6 +87,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  
 }
 
 a {
@@ -561,3 +562,4 @@ h3{
   margin: 0;
   padding: 0;
 }
+

@@ -50,7 +50,7 @@ export default function Home() {
             times: [0,  1],
             ease: "linear",
             delay:1,
-          }} style={{color:"white", display:"flex", flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}><img style={{paddingRight:"5%", marginLeft:"5%"}} width={50} src='Cognify-Logo-White.png'></img>  Cognify</motion.div>
+          }} className={styles.divLogo}><img className={styles.divLogoImg} src='Cognify-Logo-White.png'></img>  Cognify</motion.div>
         </div>
 
 
@@ -65,7 +65,7 @@ export default function Home() {
                 times: [0,  1],
                 ease: "linear",
                 delay:1.4,
-              }} style={{width:"100%", fontSize: "3.5rem", paddingBottom:"2%"}}>
+              }} className={styles.heroTextLarge}>
                 Empowering humanity
               </motion.div>
               <motion.div initial={{opacity:0}}
@@ -77,7 +77,7 @@ export default function Home() {
                 times: [0,  1],
                 ease: "linear",
                 delay:1.6,
-              }} style={{width:"100%", fontSize: "3rem", color: '#ccc'}}>
+              }} className={styles.heroTextSmall}>
                 through AI innovation
               </motion.div>
           </div>
@@ -93,7 +93,8 @@ export default function Home() {
               times: [0,  1],
               ease: "linear",
               delay:2,
-            }} style={{width:"100%"}}>
+            }} className={styles.divProductsGrid}>
+
           <div className={styles.grid}>
             <a
               href="/articleCalculator"
@@ -104,11 +105,11 @@ export default function Home() {
               <div 
               className={styles.card}>
 
-<span>
-              <h2 >
+              <span>
+              <h2 className={styles.gridHead}>
                 Content Analyzer <span>-&gt;</span>
               </h2>
-              <p >
+              <p className={styles.gridDescription}>
                 Assess the quality of your content with our AI powered tool
               </p>
               </span>
@@ -122,10 +123,10 @@ export default function Home() {
               rel="noopener noreferrer"
             >
               <span>
-              <h2 >
+              <h2 className={styles.gridHead}>
                 Content Generator <span></span>
               </h2>
-              <p >
+              <p className={styles.gridDescription}>
                 Coming soon
               </p></span>
             </a>
@@ -136,10 +137,10 @@ export default function Home() {
               rel="noopener noreferrer"
             >
               <span>
-              <h2 >
+              <h2 className={styles.gridHead}>
                 News Analyzer <span></span>
               </h2>
-              <p >
+              <p className={styles.gridDescription}>
                 Coming soon
               </p>
               </span>
@@ -151,10 +152,10 @@ export default function Home() {
               rel="noopener noreferrer"
             >
               <span>
-              <h2 >
+              <h2 className={styles.gridHead}>
                 Sapiens <span></span>
               </h2>
-              <p >
+              <p className={styles.gridDescription}>
                 Coming soon
               </p>
               </span>
