@@ -174,7 +174,7 @@ const response = await openai.createCompletion({
       
       <div className="form-container">
         <form onSubmit={handleSubmit} >
-            <Brand_AI type={"Content Analyser"}></Brand_AI>
+            <Brand_AI type={"Content Analyzer"}></Brand_AI>
             <div style={{display:"flex", justifyContent:"space-evenly", flexDirection:"column", height:"80%"}}>
             <h3 style={{ fontWeight: "normal", color:"white", padding:"1vw", width:"100%", display:"flex", flexDirection:"row", justifyContent:"flex-start"}}>Enter your content in the box below and choose the appropriate options</h3>
           <div className="everythingContainer">
@@ -289,8 +289,8 @@ const response = await openai.createCompletion({
   aria-labelledby="parent-modal-title"
   aria-describedby="parent-modal-description"
 >
-  <Box sx={{ ...style, display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", width: "100%", height:"100%", borderRadius:"10px", backgroundColor:"#ffffff" ,border:"none"}}>
-  {loading?<Audio></Audio>:<div style={{  display:"flex", flexDirection:"column", justifyContent:"space-evenly", width:"100%", height:"100%", alignItems:"center"}}><ReactApexChart data={GPTratings} data2={GPTdetails}></ReactApexChart>
+  <Box sx={{ ...style, display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center", width: "100%", height:"100%", backgroundColor:"#202123" ,border:"none"}}>
+  {loading?<div style={{  display:"flex", flexDirection:"column", justifyContent:"space-evenly", width:"100%", height:"100%", alignItems:"center"}}><Audio></Audio></div>:<div style={{  display:"flex", flexDirection:"column", justifyContent:"space-evenly", width:"100%", height:"100%", alignItems:"center"}}><ReactApexChart data={GPTratings} data2={GPTdetails}></ReactApexChart>
   <p className="overallQualityText">{GPToverview.detail}</p>
   <div className="overallQualityText"><div style={{width:"100%", display:"flex", flexDirection:"column", alignItems:"center"}}>Overall score<Rating name="read-only" value={GPToverview.star} max={10} readOnly /></div></div>
   <Button onClick={handleClose}>Close</Button></div>}
