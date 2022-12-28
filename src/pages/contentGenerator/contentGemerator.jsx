@@ -81,8 +81,8 @@ const ContentGenerator = ()=> {
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: "From this description of a website:\n\n"+article+"\n\nLearn the company perspective from the website description above.\n\n\nAnd from this description of a blog content input:\n\n"+data2.inData +"\n\n\nDetect the language of the blog content input description, and generate 2 new compelling prompts from the blog content input description with the company perspective, so that when I tell you to write a blog about it, you can do it properly in the detected language. Generate 3 word prompts for dall-e, the prompts for dall-e should be made using general words that describe objects on the real world.\n\nAnswer format JUST OUTPUT AN ARRAY DONT WRITE ANYTHING ELSE:\n[[\"PROMPT IN DETECTED LANGUAGE\",\"DALL-E PROMPT IN ENGLISH\"],[\"PROMPT IN DETECTED LANGUAGE\",\"DALL-E PROMPT IN ENGLISH\"]]\n\n",    
-    temperature: 0.7,
+    prompt: "Hey, GPT-3 you know turkish right? some of this prompt may contain turkish and english togeather, please be aware of this fact.\nFrom this description of a website:\n\n"+article+"\n\nLearn the company perspective from the website description above.\n\n\nAnd from this description of a blog content input:\n\n"+data2.inData +"\n\n\nDetect the language of the blog content input description, and generate 2 new compelling prompts from the blog content input description with the company perspective, so that when I tell you to write a blog about it, you can do it properly in the detected language. Generate 3 word prompts for dall-e, the prompts for dall-e should be made using general words that describe objects on the real world.\n\nAnswer format JUST OUTPUT AN ARRAY DONT WRITE ANYTHING ELSE:\n[[\"PROMPT IN DETECTED LANGUAGE\",\"DALL-E PROMPT IN ENGLISH\"],[\"PROMPT IN DETECTED LANGUAGE\",\"DALL-E PROMPT IN ENGLISH\"]]\n\n",    
+    temperature: 0.8,
     max_tokens: 1759,
     top_p: 1,
     frequency_penalty: 0,
