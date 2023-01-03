@@ -479,6 +479,7 @@ h3{
 .overallQualityText{
   width: 100%;
   display: flex;
+  font-size: small;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;

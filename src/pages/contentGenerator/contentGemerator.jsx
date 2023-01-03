@@ -83,7 +83,7 @@ const ContentGenerator = ()=> {
   console.log(article2);
   const response = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: "From this description of a company:\n\n"+article+"\n\nGenerate 3 prompts for dall-e that can generate an image that is related to this description, the formatting must be as such: [\"dall-e prompt\",\"dall-e prompt\",\"dall-e prompt\"]\n OUTPUT:",
+    prompt: "From this description of a company:\n\n"+article+"\n\nGenerate 3 prompts for dall-e that can generate an image that is related to this description, dont use the company name in your prompt since dall-e is not good with words, the formatting must be as such: [\"dall-e prompt\",\"dall-e prompt\",\"dall-e prompt\"]\n OUTPUT:",
     temperature: 0.8,
     max_tokens: 1759,
     top_p: 1,
@@ -98,9 +98,9 @@ const ContentGenerator = ()=> {
   });
   const response3 = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: "From this title:\n"+ article2 +"\nWrite an article that explains topics related to the title which is at least 1000 tokens in length, be clear and detailed in your output.\nOUTPUT:",
+    prompt: "From this title:\n"+ article2 +"\nWrite an article that explains topics related to the title which is at least 2000 tokens in length, be clear and detailed in your output and do not repeat yourself.\nOUTPUT:",
     temperature: 0.5,
-    max_tokens: 1993,
+    max_tokens: 2993,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
@@ -283,7 +283,9 @@ const ContentGenerator = ()=> {
       <a href={imgUrlList[2]} className="overallQualityText">Image Link</a>
       <img src={imgUrlList[2]}></img>
     </div>
+    
     </div>
+    <span className="overallQualityText">Word count for the article: {response[1].split(" ").length + response[2].split(" ").length}</span>
   <Button onClick={handleClose}>Close</Button></div>}
   
   </Box>
