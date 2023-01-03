@@ -98,7 +98,7 @@ const ContentGenerator = ()=> {
   });
   const response3 = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: "From this title, write an article that follows the AIDA model, do not explain the AIDA model in your article:\n"+ article2 +"\nOutput a javascript object that follows the AIDA model, EXAMPLE: {\"Attention\":\"YOUR OUTPUT FOR ATTENTION (at least 100 words)\",\"Interest\":\"YOUR OUTPUT FOR INTEREST (at least 200 words)\",\"Desire\":\"YOUR OUTPUT FOR DESIRE (at least 200 words)\",\"Action\":\"YOUR OUTPUT FOR ACTION (at least 100 words)\"}\nOUTPUT:",
+    prompt: "From this title:\n"+ article2 +"\nWrite an article that explains topics related to the title which is at least 1000 tokens in length, be clear and detailed in your output.\nOUTPUT:",
     temperature: 0.5,
     max_tokens: 1993,
     top_p: 1,
@@ -114,6 +114,7 @@ const ContentGenerator = ()=> {
     frequency_penalty: 0,
     presence_penalty: 0,
   });
+  console.log(response3.data.choices[0].text)
   setResponse([article2,response3.data.choices[0].text,response4.data.choices[0].text])
   setImgUrlList([response2.data.data[0].url,response2.data.data[1].url,response2.data.data[2].url])
   setLoading(false);
@@ -255,36 +256,15 @@ const ContentGenerator = ()=> {
     <p className="overallQualityTextHEADER">{response[0]}</p>
     
     </div>
+    
     <div style={{display:"flex", flexDirection:"column"}}>
-    <p className="overallQualityTextHead">{listOfWords[0]}</p>
 
-    <p className="overallQualityText">{JSON.parse(response[1])[listOfWords[0]]}</p>
+    <span className="overallQualityText" style={{whiteSpace: "pre-line"}}>{response[1]}</span>
     
     </div>
-    <div style={{display:"flex", flexDirection:"column"}}>
-    <p className="overallQualityTextHead">{listOfWords[1]}</p>
-
-    <p className="overallQualityText">{JSON.parse(response[1])[listOfWords[1]]}</p>
     
-    </div>
-    <div style={{display:"flex", flexDirection:"column"}}>
-    <p className="overallQualityTextHead">{listOfWords[2]}</p>
-
-    <p className="overallQualityText">{JSON.parse(response[1])[listOfWords[2]]}</p>
-    
-    </div>
-    <div style={{display:"flex", flexDirection:"column"}}>
-    <p className="overallQualityTextHead">{listOfWords[3]}</p>
-
-    <p className="overallQualityText">{JSON.parse(response[1])[listOfWords[3]]}</p>
-    
-    </div>
-    <div style={{display:"flex", flexDirection:"column"}}>
-    <p className="overallQualityTextHead">Connection between the blog and your described company</p>
-
     <p className="overallQualityText">{response[2]}</p>
     
-    </div>
     <div style={{width: "100%",display:"flex", flexDirection:"row" ,justifyContent:"space-evenly"}}>
       <div style={
         {display: "flex", flexDirection: "column", width:"256px"}
