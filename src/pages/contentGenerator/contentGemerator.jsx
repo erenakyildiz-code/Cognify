@@ -67,7 +67,7 @@ const ContentGenerator = ()=> {
       }
     }
   }));
-  async function setter(article) 
+  async function setter(article,article2) 
   {
     setLoading(true);
     setOpen(true);
@@ -77,35 +77,35 @@ const ContentGenerator = ()=> {
     //TODO not secure
   apiKey: "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",
   });
+  
   const openai = new OpenAIApi(configuration);
-
+  console.log(article)
+  console.log(article2);
   const response = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: "Hey, GPT-3 you know turkish right? some of this prompt may contain turkish and english togeather, please be aware of this fact.\nFrom this description of a website:\n\n"+article+"\n\nLearn the company perspective from the website description above.\n\n\nAnd from this description of a blog content input:\n\n"+data2.inData +"\n\n\nDetect the language of the blog content input description, and generate 2 new compelling prompts from the blog content input description with the company perspective, so that when I tell you to write a blog about it, you can do it properly in the detected language. Generate 3 word prompts for dall-e, the prompts for dall-e should be made using general words that describe objects on the real world.\n\nAnswer format JUST OUTPUT AN ARRAY DONT WRITE ANYTHING ELSE:\n[[\"PROMPT IN DETECTED LANGUAGE\",\"DALL-E PROMPT IN ENGLISH\"],[\"PROMPT IN DETECTED LANGUAGE\",\"DALL-E PROMPT IN ENGLISH\"]]\n\n",    
+    prompt: "From this description of a company:\n\n"+article+"\n\nGenerate 3 prompts for dall-e that can generate an image that is related to this description, the formatting must be as such: [\"dall-e prompt\",\"dall-e prompt\",\"dall-e prompt\"]\n OUTPUT:",
     temperature: 0.8,
     max_tokens: 1759,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
   });
-  console.log(JSON.parse(response.data.choices[0].text)[0][0])
-console.log(JSON.parse(response.data.choices[0].text)[0][1])
+  console.log(response.data.choices[0].text)
   var response2 = await openai.createImage({
-    prompt: JSON.parse(response.data.choices[0].text)[0][1] + "Impressionist oil painting ",
+    prompt: JSON.parse(response.data.choices[0].text)[0] + "Impressionist oil painting ",
     n: 3,
     size: "256x256",
   });
   const response3 = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: "Title of blog post:\n"+ JSON.parse(response.data.choices[0].text)[0][0] +"\nOUTPUT FORMAT MUST BE A JAVASCRIPT OBJECT, EXAMPLE: {\"Attention\":\"YOUR OUTPUT FOR ATTENTION (at least 100 words)\",\"Interest\":\"YOUR OUTPUT FOR INTEREST (at least 200 words)\",\"Desire\":\"YOUR OUTPUT FOR DESIRE (at least 200 words)\",\"Action\":\"YOUR OUTPUT FOR ACTION (at least 100 words)\"}\nOUTPUT:",
+    prompt: "From this title, write an article that follows the AIDA model, do not explain the AIDA model in your article:\n"+ article2 +"\nOutput a javascript object that follows the AIDA model, EXAMPLE: {\"Attention\":\"YOUR OUTPUT FOR ATTENTION (at least 100 words)\",\"Interest\":\"YOUR OUTPUT FOR INTEREST (at least 200 words)\",\"Desire\":\"YOUR OUTPUT FOR DESIRE (at least 200 words)\",\"Action\":\"YOUR OUTPUT FOR ACTION (at least 100 words)\"}\nOUTPUT:",
     temperature: 0.5,
     max_tokens: 1993,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
   });
-  console.log(response3.data.choices[0].text)
-  setResponse([JSON.parse(response.data.choices[0].text)[0][0],response3.data.choices[0].text,"Nothing yet"])
+  setResponse([article2,response3.data.choices[0].text,"Nothing yet"])
   setImgUrlList([response2.data.data[0].url,response2.data.data[1].url,response2.data.data[2].url])
   setLoading(false);
   }
@@ -115,7 +115,7 @@ console.log(JSON.parse(response.data.choices[0].text)[0][1])
     // prevents the submit button from refreshing the page
     event.preventDefault();
     
-    setter(data)
+    setter(data,data2)
   };
 
   const handleChange = (event) => {
