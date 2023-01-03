@@ -105,7 +105,16 @@ const ContentGenerator = ()=> {
     frequency_penalty: 0,
     presence_penalty: 0,
   });
-  setResponse([article2,response3.data.choices[0].text,"Nothing yet"])
+  const response4 = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: "Write one paragraph that connects " + article +" with "+ article2 + " the paragraph should be at least 100 tokens long, but you can go up to 300 if you think it should be that long.\n",
+    temperature: 0.5,
+    max_tokens: 1993,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  });
+  setResponse([article2,response3.data.choices[0].text,response4.data.choices[0].text])
   setImgUrlList([response2.data.data[0].url,response2.data.data[1].url,response2.data.data[2].url])
   setLoading(false);
   }
@@ -268,6 +277,12 @@ const ContentGenerator = ()=> {
     <p className="overallQualityTextHead">{listOfWords[3]}</p>
 
     <p className="overallQualityText">{JSON.parse(response[1])[listOfWords[3]]}</p>
+    
+    </div>
+    <div style={{display:"flex", flexDirection:"column"}}>
+    <p className="overallQualityTextHead">Connection between the blog and your described company</p>
+
+    <p className="overallQualityText">{response[2]}</p>
     
     </div>
     <div style={{width: "100%",display:"flex", flexDirection:"row" ,justifyContent:"space-evenly"}}>
